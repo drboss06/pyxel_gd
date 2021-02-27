@@ -15,35 +15,39 @@ class App:
         self.x = 0
         self.y = self.y_dest
 
+        self.x_v = 0
+        self.y_v = 0
+
         self.player = cRect(self.x, self.y, 10, 10, pyxel.COLOR_LIME)
 
         pyxel.run(self.update, self.draw)
 
     def update(self):
-        if pyxel.btnp(pyxel.KEY_S):
-            self.y_dest += 10
-        if pyxel.btnp(pyxel.KEY_W):
-            self.y_dest -= 10
-        if pyxel.btnp(pyxel.KEY_D) and self.x == self.x_dest:
-            self.x_dest += 10
-        if pyxel.btnp(pyxel.KEY_A) and self.x == self.x_dest:
-            self.x_dest -= 10
+        if pyxel.btnp(pyxel.KEY_W) and self.y_v == 0:
+            self.y_v = -10
+        if pyxel.btnp(pyxel.KEY_D):
+            self.x_v += 2
+        if pyxel.btnp(pyxel.KEY_A):
+            self.x_v -= 2
+        if pyxel.btnr(pyxel.KEY_D):
+            self.x_v = 0
+        if pyxel.btnr(pyxel.KEY_A):
+            self.x_v = 0
 
-        if self.y_dest != self.y:
-            self.y += 1 if self.y_dest > self.y else -1
-            if self.y < 0:
-                self.y = 0
-            if self.y > 120 - self.height:
-                self.y = 120 - self.height
-        if self.x_dest != self.x:
-            self.x += 1 if self.x_dest > self.x else -1
-            if self.x < 0:
-                self.x = 0
-            if self.x > 160 - self.width:
-                self.x = 160 - self.width
+        self.x += self.x_v
+        self.y += self.y_v
 
-        if self.y_dest == self.y and self.y_dest != 120 - self.height: #and self.y >= 160 - self.height:
-            self.y_dest = 120 - self.height
+        if self.y < 120 - self.height:
+            self.y_v += GRAVITY
+
+        if self.y == 120 - self.height and self.y_v > 0:
+            self.y_v = 0
+        
+        if self.x > 160 - self.width:
+            self.x = 160 - self.width
+
+        if self.x < 0:
+            self.x = 0
 
         self.player.set_pos(self.x, self.y)
 
