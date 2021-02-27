@@ -53,7 +53,7 @@ class App:
     
     def draw_level(self):
         for i in inf_rect:
-            pyxel.rect(i[0], i[1], i[2], i[3], 11)
+            pyxel.rect(i[1], i[0], i[2], i[3], 11)
         
 
 App()
