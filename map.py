@@ -1,3 +1,5 @@
+import setings as st
+
 mapa = [
     '...................',
     '...................',
@@ -8,5 +10,6 @@ mapa = [
 
 inf_rect = []
 for i in mapa:
-    if i == '#':
-        
+    for k in i:
+        if k == '#':
+            inf_rect.append([i, k, st.WIDTH, st.HEIGTH])
