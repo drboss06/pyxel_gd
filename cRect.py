@@ -40,3 +40,18 @@ class cPlatform(cRect):
     def draw(self):
         if self.active:
             super().draw()
+
+
+class Coin:
+    def __init__(self, x, y, r, col=0):
+        self.x, self.y = x, y
+        self.r = r
+        self.col = col
+    
+    def draw(self):
+        pyxel.circ(self.x, self.y, self.r, self.col)
+    
+    def collision(self, center, r):
+        if ((self.x - center.x) ** 2 + (self.y - center.y) ** 2) < self.r + r:
+            return True
+        return False
