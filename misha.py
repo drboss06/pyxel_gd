@@ -11,9 +11,9 @@ class App:
         self.width = 10
         self.height = 10
         self.x_dest = 0
-        self.y_dest = 0
+        self.y_dest = 120 - self.height
         self.x = 0
-        self.y = 0
+        self.y = self.y_dest
 
         self.player = cRect(self.x, self.y, 10, 10, pyxel.COLOR_LIME)
 
@@ -41,6 +41,9 @@ class App:
                 self.x = 0
             if self.x > 160 - self.width:
                 self.x = 160 - self.width
+
+        if self.y_dest == self.y and self.y_dest != 120 - self.height: #and self.y >= 160 - self.height:
+            self.y_dest = 120 - self.height
 
         self.player.set_pos(self.x, self.y)
 
