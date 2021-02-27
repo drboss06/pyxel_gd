@@ -52,6 +52,6 @@ class Coin:
         pyxel.circ(self.x, self.y, self.r, self.col)
     
     def collision(self, center, r):
-        if ((self.x - center.x) ** 2 + (self.y - center.y) ** 2) < self.r + r:
+        if ((self.x - center[0]) ** 2 + (self.y - center[1]) ** 2) <= self.r + r:
             return True
         return False
