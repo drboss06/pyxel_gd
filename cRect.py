@@ -37,6 +37,6 @@ class cPlatform(cRect):
                 self.active = False
                 return True
     
-    def draw(self):
+    def cDraw(self):
         if self.active:
             self.draw()
