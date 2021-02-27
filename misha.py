@@ -1,5 +1,5 @@
 import pyxel
-from cRect import cRect, cPlatform
+from cRect import cRect, cPlatform, Coin
 
 
 GRAVITY = 1
@@ -15,7 +15,8 @@ class App:
         self.x = 0
         self.y = self.y_dest
 
-        self.platform = cPlatform(140, 60, 30, 10, pyxel.COLOR_PEACH)
+        self.platform = cPlatform(100, 80, 30, 10, pyxel.COLOR_PEACH)
+        self.coins = [Coin(10, 100, 5, pyxel.COLOR_YELLOW)]
 
         self.x_v = 0
         self.y_v = 0
@@ -40,19 +41,22 @@ class App:
             self.x_v = 0
 
         self.x += self.x_v
-        if self.platform.collision(self.player):
-            self.x = 0
 
         self.y += self.y_v
         if self.platform.collision(self.player):
-            self.y = 150
+            if self.y > self.platform.y:
+                self.y = self.platform.y + 10
+            else:
+                self.y = self.platform.y - 10
+            self.y_v = 0
 
 
         if self.y < 120 - self.height:
             self.y_v += GRAVITY
 
-        if self.y == 120 - self.height and self.y_v > 0:
+        if self.y >= 120 - self.height and self.y_v > 0:
             self.y_v = 0
+            self.y = 120 - self.height
 
         
         if self.x > 160 - self.width:
@@ -61,11 +65,23 @@ class App:
         if self.x < 0:
             self.x = 0
 
+        to_del = []
+        for i in range(len(self.coins)):
+            if self.coins[i].collision((self.x + 5, self.y + 5), 5):
+                to_del.append(i)
+
+        for coin in to_del:
+            self.coins.pop(coin)
+            print('success')
+
         self.player.set_pos(self.x, self.y)
 
     def draw(self):
         pyxel.cls(pyxel.COLOR_LIGHTBLUE)
         self.player.draw()
+
+        for coin in self.coins:
+            coin.draw()
         
         self.platform.draw()
 
