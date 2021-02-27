@@ -27,7 +27,7 @@ class cRect:
 
 
 class cPlatform(cRect):
-    def __init(self, x, y, w, h, col):
+    def __init__(self, x, y, w, h, col):
         super().__init__(x, y, w, h, col)
         self.active = True
     
@@ -36,7 +36,4 @@ class cPlatform(cRect):
             if player.falling:
                 self.active = False
                 return True
-    
-    def draw(self):
-        if self.active:
-            self.draw()
+
